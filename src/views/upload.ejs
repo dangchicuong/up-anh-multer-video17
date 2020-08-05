@@ -1,0 +1,53 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<form>
+    <!-- left column -->
+    <div class="col-md-3">
+        <div class="text-center" id="div-update-avatar">            
+            <h6>Tải lên một ảnh mới...</h6>
+            <input type="file" class="form-control" id="input-change-avatar" name="avatar"><br>
+            <input type="button" id="input-btn-update-user" name="submit" value="Lưu lại">
+        </div>
+    </div>    
+</form>
+<script>
+
+let userAvatar = null;
+function updateUserInfo() {
+    $("#input-change-avatar").bind("change", function(){
+      let fileData = $(this).prop("files")[0];
+      let formData = new FormData();
+        formData.append("avatar", fileData);
+        userAvatar = formData;
+        console.log(fileData);
+    });
+
+  }
+$(document).ready(function () {
+        updateUserInfo();
+
+$("#input-btn-update-user").bind("click", function(){
+    console.log("su ly truong hop upload anh avatar");
+    console.log(userAvatar);
+    $.ajax({
+     
+      url:"/user/update-avatar",        
+      type: "put",         
+      cache :false,
+      contenType:false,
+      processData:false,       
+      data:userAvatar,
+      
+      success:function(result){
+
+      },
+     
+      error:function(error){
+
+      },
+
+    })
+
+});
+
+});
+</script>
